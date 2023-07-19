@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Health : MonoBehaviour
 {
@@ -52,25 +53,7 @@ public class Health : MonoBehaviour
     }
 
 
-    public void AddHealth(float _value)
-    {
-        currentHealth = Mathf.Clamp(currentHealth + _value, 0, startingHealth);
-    }
-
-
-    public void Respawn()
-    {
-        dead = false;
-        AddHealth(startingHealth);
-        anim.ResetTrigger("die");
-        anim.Play("PlayerIdle");
-        StartCoroutine(Invunerability());
-
-        // Activate all attached component classes
-        foreach (Behaviour component in components)
-            component.enabled = true;
-    }
-
+    // Method that will be used to make the enemy invulnerable for a few seconds after they get hit
     private IEnumerator Invunerability()
     {
         Physics2D.IgnoreLayerCollision(3, 7, true);
@@ -82,7 +65,7 @@ public class Health : MonoBehaviour
             spriteRend.color = Color.white;
             yield return new WaitForSeconds(iFramesDuration / (numberOfFlashes * 2));
         }
-        Physics2D.IgnoreLayerCollision(3, 7, true);
+        Physics2D.IgnoreLayerCollision(3, 7, false);
 
     }
 }

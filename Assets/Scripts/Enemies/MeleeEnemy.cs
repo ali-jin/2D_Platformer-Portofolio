@@ -17,7 +17,7 @@ public class MeleeEnemy : MonoBehaviour
 
     //References
     private Animator anim;
-    private Health playerHealth;
+    private HealthPlayer playerHealth;
     private EnemyPatrol enemyPatrol;
 
 
@@ -49,20 +49,23 @@ public class MeleeEnemy : MonoBehaviour
     }
 
 
+    // Enemy range attack
     private bool PlayerInSight()
     {
         RaycastHit2D hit = 
-            Physics2D.BoxCast(boxCollider.bounds.center + transform.right * transform.localScale.x * colliderDistance,
+            Physics2D.BoxCast(boxCollider.bounds.center + transform.right * -transform.localScale.x * colliderDistance,
             boxCollider.bounds.size, 0, new (transform.localScale.x, 0), range, playerLayer);
 
-        if (hit.collider != null) {
-            playerHealth = hit.transform.GetComponent<Health>();
+        if (hit.collider != null)
+        {
+            playerHealth = hit.transform.GetComponent<HealthPlayer>();
         }
 
         return hit.collider != null;
     }
 
 
+    // Visual box to see the range of the enemy
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
