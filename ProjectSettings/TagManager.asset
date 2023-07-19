@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Checkpoint
   - Crystal
+  - Shard
+  - NextLevel
   layers:
   - Default
   - TransparentFX
